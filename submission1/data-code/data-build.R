@@ -6,6 +6,7 @@ for (y in 2007:2015) {
   ## Basic contract/plan information
   ma.path=paste0("data/input/monthly-ma-and-pdp-enrollment-by-cpsc/CPSC_Contract_Info_2015_01.csv")
 
+library(readr)
 
   contract.info=read_csv(ma.path,
                          skip=1,
@@ -27,6 +28,7 @@ for (y in 2007:2015) {
                            contract_date = col_character()
                          ))
 
+
   contract.info = contract.info %>%
     group_by(contractid, planid) %>%
     mutate(id_count=row_number())
@@ -34,6 +36,7 @@ for (y in 2007:2015) {
   contract.info = contract.info %>%
     filter(id_count==1) %>%
     select(-id_count)
+
 
 ## Enrollments per plan
   ma.path=paste0("data/input/monthly-ma-and-pdp-enrollment-by-cpsc/CPSC_Enrollment_Info_2015_01.csv")
@@ -49,10 +52,12 @@ for (y in 2007:2015) {
                        county = col_character(),
                        enrollment = col_double()
                        ),na="*")
+
  ## Merge contract info with enrollment info
   plan.data = contract.info %>%
     left_join(enroll.info, by=c("contractid", "planid")) %>%
     mutate(year=y)
+
     
   ## Fill in missing fips codes (by state and county)
   plan.data = plan.data %>%
@@ -62,11 +67,13 @@ for (y in 2007:2015) {
   plan.data = plan.data %>%
     group_by(contractid, planid) %>%
     fill(plan_type, partd, snp, eghp, plan_name)
+
   
   ## Fill in missing contract characteristics by contractid
   plan.data = plan.data %>%
     group_by(contractid) %>%
     fill(org_type,org_name,org_marketing_name,parent_org)
+
     
   ## Collapse from monthly data to yearly
   plan.year = plan.data %>%
@@ -74,14 +81,21 @@ for (y in 2007:2015) {
     arrange(contractid, planid, fips) %>%
     rename(avg_enrollment=enrollment)
 
+
      write_rds(plan.year,paste0("data/output/ma_data_2015.rds"))
 }
+
 
 full.ma.data <- read_rds("data/output/ma_data_2007.rds")
 for (y in 2008:2015) {
   full.ma.data <- rbind(full.ma.data,read_rds(paste0("data/output/ma_data_2015.rds")))
 }
 
+
 write_rds(full.ma.data,"data/output/full_ma_data.rds")
-sapply(paste0("ma_data_", 2007:2015, ".rds"), unlink)     
-                 
+
+
+
+sapply(paste0("ma_data_", 2007:2015, ".rds"), unlink)  
+
+
