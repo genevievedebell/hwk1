@@ -11,7 +11,6 @@ install.packages("dplyr")
 library(dplyr)
 install.packages("tidyverse")
 library(tidyverse)
-
   contract.info=read_csv(ma.path,
                          skip=1,
                          col_names = c("contractid","planid","org_type","plan_type",
@@ -32,7 +31,7 @@ library(tidyverse)
                            contract_date = col_character()
                          ))
 
-
+glimpse(contract.info)
 
   contract.info = contract.info %>%
     group_by(contractid, planid) %>%
@@ -43,31 +42,34 @@ library(tidyverse)
     select(-id_count)
 
 ## Enrollments per plan
-  ma.path=paste0("data/input/monthly-ma-and-pdp-enrollment-by-cpsc/CPSC_Enrollment_Info_2015_01.csv")
-  enroll.info=read_csv(ma.path,
-                       skip=1,
-                       col_names = c("contractid","planid","ssa","fips","state","county","enrollment"),
-                       col_types = cols(
-                       contractid = col_character(),
-                       planid = col_double(),
-                       ssa = col_double(),
-                       fips = col_double(),
-                       state = col_character(),
-                       county = col_character(),
-                       enrollment = col_double()
-                       ),na="*")
+  ma.path=paste0("/Users/genevievedebell/Documents/GitHub/hwk1/data/input/CPSC_Enrollment_Info_2015_01.csv")
+  eenroll.info <- read_csv(ma.path,
+                        skip = 1,
+                        col_names = c("contractid", "planid", "ssa", "fips", "state", "county", "enrollment"),
+                        col_types = cols(
+                          contractid = col_character(),
+                          planid = col_double(),
+                          ssa = col_double(),
+                          fips = col_double(),
+                          state = col_character(),
+                          county = col_character(),
+                          enrollment = col_double()
+                        ), 
+                        na = c("*", "NA"))
 
+glimpse(enroll.info)
  ## Merge contract info with enrollment info
-  plan.data = contract.info %>%
-    left_join(enroll.info, by=c("contractid", "planid")) %>%
-    mutate(year=y) %>%
-    select(contract_date)
-
+plan.data <- contract.info %>%
+  left_join(enroll.info, by = c("contractid", "planid")) %>%
+  mutate(year = "2015") %>%  # Ensure this connects to the next step
+  group_by(state, county) %>%  # Now group by state and county
+  fill(fips)
     
   ## Fill in missing fips codes (by state and county)
   plan.data = plan.data %>%
-    group_by(state, county) %>%
+    group_by(state,county) %>%
     fill(fips)
+colnames(plan.data)
     ## Fill in missing plan characteristics by contract and plan id
   plan.data = plan.data %>%
     group_by(contractid, planid) %>%
