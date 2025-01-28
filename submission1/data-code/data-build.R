@@ -102,7 +102,6 @@ for (y in 2008:2015) {
 write_rds(full.ma.data,"data/output/full_ma_data.rds")
 
 
-
-
 sapply(paste0("ma_data_", 2007:2015, ".rds"), unlink)  
 print(full.ma.data)
+glimpse(full.ma.data)
