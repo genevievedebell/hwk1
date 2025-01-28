@@ -4,9 +4,12 @@
 
 for (y in 2007:2015) {
   ## Basic contract/plan information
-  ma.path=paste0("data/input/monthly-ma-and-pdp-enrollment-by-cpsc/CPSC_Contract_Info_2015_01.csv")
-
+  ma.path=paste0("/Users/genevievedebell/Documents/GitHub/hwk1/data/input/CPSC_Contract_Info_2015_01.csv")
+install.packages("readr")
 library(readr)
+install.packages("dplyr")
+library(dplyr)
+
 
   contract.info=read_csv(ma.path,
                          skip=1,
@@ -37,7 +40,6 @@ library(readr)
     filter(id_count==1) %>%
     select(-id_count)
 
-
 ## Enrollments per plan
   ma.path=paste0("data/input/monthly-ma-and-pdp-enrollment-by-cpsc/CPSC_Enrollment_Info_2015_01.csv")
   enroll.info=read_csv(ma.path,
@@ -57,7 +59,7 @@ library(readr)
   plan.data = contract.info %>%
     left_join(enroll.info, by=c("contractid", "planid")) %>%
     mutate(year=y) %>%
-    select(-contract_date)
+    select(contract_date)
 
     
   ## Fill in missing fips codes (by state and county)
@@ -97,7 +99,6 @@ write_rds(full.ma.data,"data/output/full_ma_data.rds")
 
 
 
+
 sapply(paste0("ma_data_", 2007:2015, ".rds"), unlink)  
 print(full.ma.data)
-
-print("hello")
