@@ -56,7 +56,8 @@ library(readr)
  ## Merge contract info with enrollment info
   plan.data = contract.info %>%
     left_join(enroll.info, by=c("contractid", "planid")) %>%
-    mutate(year=y)
+    mutate(year=y) %>%
+    select(-contract_date)
 
     
   ## Fill in missing fips codes (by state and county)
@@ -97,5 +98,6 @@ write_rds(full.ma.data,"data/output/full_ma_data.rds")
 
 
 sapply(paste0("ma_data_", 2007:2015, ".rds"), unlink)  
+print(full.ma.data)
 
-
+print("hello")
