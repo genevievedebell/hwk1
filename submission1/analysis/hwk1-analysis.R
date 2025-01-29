@@ -34,3 +34,5 @@ print(average_enrollment_table)
 average_enrollment_table %>%
   kable(format = "html", col.names = c("Plan Type", "Average Enrollment")) %>%
   kable_styling(full_width = FALSE, position = "center")
+
+

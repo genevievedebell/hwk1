@@ -2,7 +2,6 @@
 ## Read in enrollment data for january of each year
 #########################################################################
 
-for (y in 2007:2015) {
   ## Basic contract/plan information
   ma.path=paste0("/Users/genevievedebell/Documents/GitHub/hwk1/data/input/CPSC_Contract_Info_2015_01.csv")
 install.packages("readr")
@@ -11,7 +10,7 @@ install.packages("dplyr")
 library(dplyr)
 install.packages("tidyverse")
 library(tidyverse)
-  contract.info=read_csv(ma.path,
+  contract.info <- read_csv(ma.path,
                          skip=1,
                          col_names = c("contractid","planid","org_type","plan_type",
                                        "partd","snp","eghp","org_name","org_marketing_name",
@@ -43,7 +42,7 @@ glimpse(contract.info)
 
 ## Enrollments per plan
   ma.path=paste0("/Users/genevievedebell/Documents/GitHub/hwk1/data/input/CPSC_Enrollment_Info_2015_01.csv")
-  eenroll.info <- read_csv(ma.path,
+  enroll.info <- read_csv(ma.path,
                         skip = 1,
                         col_names = c("contractid", "planid", "ssa", "fips", "state", "county", "enrollment"),
                         col_types = cols(
@@ -55,8 +54,8 @@ glimpse(contract.info)
                           county = col_character(),
                           enrollment = col_double()
                         ), 
-                        na = c("*", "NA"))
-
+                        na = c("*"))
+problems(enroll.info)
 glimpse(enroll.info)
  ## Merge contract info with enrollment info
 plan.data <- contract.info %>%
@@ -90,13 +89,13 @@ colnames(plan.data)
 
 
      write_rds(plan.year,paste0("data/output/ma_data_2015.rds"))
-}
 
 
-full.ma.data <- read_rds("data/output/ma_data_2007.rds")
-for (y in 2008:2015) {
+
+full.ma.data <- read_rds("data/output/ma_data_2015.rds")
+f
   full.ma.data <- rbind(full.ma.data,read_rds(paste0("data/output/ma_data_2015.rds")))
-}
+
 
 
 write_rds(full.ma.data,"data/output/full_ma_data.rds")
