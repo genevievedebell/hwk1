@@ -27,11 +27,11 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes, 
 #| include: false
 #| eval: true
  
-load("submission2/results/Hwk1_workspace.Rdata")
+load("/Users/genevievedebell/Documents/GitHub/hwk1/submission2/results/Hwk1_workspace.Rdata")
 ```
 
 
-My answers to the homework questions are described below. Note that I do the analysis for these answers in a separate `R` script. You can read in the full data as part of your markdown file, but that takes some time to compile to pdf. So I run the analysis separately, save the workspace with only the summary stats, figures, and tables that I need, and then load the workspace in the final qmd. My analysis file is available in the analysis folder. The GitHub repository for this work is available [here](https://github.com/imccart/homework1.git). Enjoy!
+My answers to the homework questions are described below. Note that I do the analysis for these answers in a separate `R` script. You can read in the full data as part of your markdown file, but that takes some time to compile to pdf. So I run the analysis separately, save the workspace with only the summary stats, figures, and tables that I need, and then load the workspace in the final qmd. My analysis file is available in the analysis folder. The GitHub repository for this work is available [here](https://github.com/genevievedebell/hwk1). Enjoy!
 
 
 \newpage
@@ -59,7 +59,6 @@ knitr::kable(plan.type.year1,
 \newpage
 \noindent 2. Remove all special needs plans (SNP), employer group plans (eghp), and all "800-series" plans. Provide an updated table after making these exclusions.
 
-I remove the relevant plans just by applying the relevant filter to the full ma data and then creating the table of plan types. Counts of different plan types with these exclusions are presented in @tbl-plans2.
 
 ```{r}
 #| echo: false
@@ -78,7 +77,6 @@ knitr::kable(plan.type.year2,
 \newpage
 \noindent 3. Provide a table of the average enrollments for each plan type in 2015.
 
-To do this, I need to collapse the data to the plan-type level and form the average enrollments across all counties in which that plan type operates. The resulting table is presented in @tbl-enroll.
 
 ```{r}
 #| echo: false
