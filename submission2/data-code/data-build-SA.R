@@ -48,5 +48,5 @@ service_area <- service_area %>%
 
 
 ## Save the processed 2015 data
-write_rds(service_area, "/Users/genevievedebell/Documents/GitHub/hwk1/data/output/MA_Cnty_SA_2015_01.csv"
+write_rds(service_area, "/Users/genevievedebell/Documents/GitHub/hwk1/data/output/MA_Cnty_SA_2015_01.rds"
 )
