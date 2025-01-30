@@ -89,4 +89,4 @@ options(knitr.kable.NA = 0)
 knitr::kable(plan.type.enroll, digits=0,
              col.names=c("Plan Type","Count","Avg Enrollments"),
              format.args=list(big.mark=","), booktabs = TRUE)
-``` 
+```
