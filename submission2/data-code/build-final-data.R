@@ -13,5 +13,5 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table
 
 # Call individual scripts -------------------------------------------------
 
-source("submission1/data-code/1_Plan_Data.R")
-source("submission1/data-code/2_Service_Areas.R")
+source("/Users/genevievedebell/Documents/GitHub/hwk1/submission2/data-code/1_Plan_Data.R")
+source("/Users/genevievedebell/Documents/GitHub/hwk1/submission2/data-code/2_Service_Areas.R")
