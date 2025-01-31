@@ -5,8 +5,8 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table
 
 
 # Read data and set workspace for knitr -------------------------------
-full.ma.data <- readRDS('data/output/full_ma_data_2015.rds')
-contract.service.area <- readRDS('data/output/MA_Cnty_SA_2015_01.csv')
+full.ma.data <- readRDS('/Users/genevievedebell/Documents/GitHub/hwk1/data/output/plan_data.rds')
+contract.service.area <- readRDS('/Users/genevievedebell/Documents/GitHub/hwk1/data/output/service_area.rds')
 
 # Create objects for markdown ---------------------------------------------
 
@@ -17,16 +17,9 @@ plan.type.year1 <- full.ma.data %>% group_by(plan_type) %>% count() %>% arrange(
 final.plans <- full.ma.data %>%
   filter(snp == "No" & eghp == "No" &
            (planid < 800 | planid >= 900))
-
-        glimpse(final.plans)
-        glimpse(full.ma.data)
 plan.type.year2 <- final.plans %>% group_by(plan_type) %>% count() %>% arrange(-n)
-final.plans <- final.plans %>%
-  rename(enrollment=avg_enrollment)
-plan.type.enroll <- final.plans %>% group_by(plan_type) %>% summarize(n=n(), enrollment=mean(enrollment, na.rm=TRUE)) %>% arrange(-n)
 
-final.plans <- final.plans %>%
-  mutate(year = as.double(year))
+plan.type.enroll <- final.plans %>% group_by(plan_type) %>% summarize(n=n(), enrollment=mean(enrollment, na.rm=TRUE)) %>% arrange(-n)
 
 final.data <- final.plans %>%
   inner_join(contract.service.area %>% 
@@ -35,4 +28,4 @@ final.data <- final.plans %>%
   filter(!is.na(enrollment))
 
 rm(list=c("full.ma.data", "contract.service.area","final.data"))
-save.image("submission2/results/Hwk1_workspace.Rdata")
+save.image("/Users/genevievedebell/Documents/GitHub/hwk1/submission2/Hwk1_workspace.Rdata")

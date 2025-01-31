@@ -27,7 +27,7 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes, 
 #| include: false
 #| eval: true
  
-load("/Users/genevievedebell/Documents/GitHub/hwk1/submission2/results/Hwk1_workspace.Rdata")
+load("/Users/genevievedebell/Documents/GitHub/hwk1/submission2/Hwk1_workspace.Rdata")
 ```
 
 
